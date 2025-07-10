@@ -1,7 +1,7 @@
 using UnityEngine;
 /*
  *El spawner de las figuras en el mapa
- * 
+ * abc
  */
 public interface IFigurasInterfaz
 {

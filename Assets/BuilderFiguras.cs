@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 /*
  *El script que genera las figuras en el mapa(cubo y cilindros) 
- * 
+ * abc
  */
 public class BuilderFiguras : MonoBehaviour
 {
