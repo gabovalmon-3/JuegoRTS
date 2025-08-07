@@ -1,0 +1,82 @@
+using UnityEngine;
+
+public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable
+{
+    public string tipoUnidad;
+    public int vida = 100;
+    public float velocidad = 3f;
+    public int costoEntrenamiento = 50;
+
+    private Vector3? destino = null;
+    
+    public void RecibirDanio(int cantidad)
+    {
+        vida -= cantidad;
+        Debug.Log(tipoUnidad + " recibió " + cantidad + " de daño. Vida restante: " + vida);
+
+        if (vida <= 0)
+        {
+            Debug.Log(tipoUnidad + " ha sido destruido.");
+            Destroy(gameObject);
+        }
+    }
+    
+    public IUnidad Clonar()
+    {
+        GameObject clon = Instantiate(this.gameObject);
+        return clon.GetComponent<IUnidad>();
+    }
+
+    public void EjecutarAccion()
+    {
+        Debug.Log(tipoUnidad + " está lista para combatir.");
+    }
+
+    public void MoverA(Vector3 nuevoDestino)
+    {
+        nuevoDestino.y = transform.position.y;
+        destino = nuevoDestino;
+        CambiarEstado(null);
+        Debug.Log(tipoUnidad + " se dirige a: " + destino);
+    }
+
+
+    public void Seleccionar(bool estado)
+    {
+        Renderer r = GetComponent<Renderer>();
+        if (r != null)
+            r.material.color = estado ? Color.green : Color.white;
+    }
+
+    private IEstadoUnidadJugador estadoActual;
+
+    public void CambiarEstado(IEstadoUnidadJugador nuevoEstado)
+    {
+        estadoActual = nuevoEstado;
+    }
+
+    void Update()
+    {
+        if (destino != null)
+        {
+            Vector3 objetivo = destino.Value;
+            float distancia = Vector3.Distance(transform.position, objetivo);
+
+            if (distancia > 0.1f)
+            {
+                Vector3 direccion = (objetivo - transform.position).normalized;
+                transform.position += direccion * velocidad * Time.deltaTime;
+            }
+            else
+            {
+                destino = null;
+                CambiarEstado(new EstadoAtacarAuto()); // solo entra al estado automático cuando termina de moverse
+            }
+        }
+        else
+        {
+            estadoActual?.Ejecutar(this); // solo si no hay destino
+        }
+    }
+
+}
