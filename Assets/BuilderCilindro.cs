@@ -29,7 +29,7 @@ public class BuilderCilindro : IFigurasInterfaz
         cilindro.transform.localScale = new Vector3(radio, alto, radio);
         cilindro.transform.position = new Vector3(PosicionInicial.x, PosicionInicial.y, PosicionInicial.z);
         
-        configuracionObstaculo.Configurar(cilindro);
+        configuracionObstaculo.Configurar(cilindro);//Llamo a la interfaz con la figura correspondiente a este script
         
     }
 

@@ -31,6 +31,6 @@ public class BuilderCubos : IFigurasInterfaz
             nuevoCubo.transform.localScale = new Vector3(anchoCubo, altoCubo, fondoCubo);
             nuevoCubo.transform.position = new Vector3(PosicionInicial.x, PosicionInicial.y, PosicionInicial.z);
             
-            configuracionObstaculo.Configurar(nuevoCubo);
+            configuracionObstaculo.Configurar(nuevoCubo);//Llamo a la interfaz con la figura correspondiente a este script
         }
     }
