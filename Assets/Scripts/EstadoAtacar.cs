@@ -77,12 +77,7 @@ public class EstadoAtacar : IEstadoUnidadIA
         }
         else
         {
-            temporizador -= Time.deltaTime;
-            if (temporizador <= 0f)
-            {
-                objetivo.RecibirDanio(danioPorAtaque);
-                temporizador = tiempoAtaque;
-            }
+            contexto.estrategiaCombate?.Atacar(contexto, objetivo);
         }
     }
 

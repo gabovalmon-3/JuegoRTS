@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemigoIA : MonoBehaviour
+public class EnemigoIA : MonoBehaviour, IDamageable
 {
     public IEstadoUnidadIA estadoActual;
     public Transform[] puntosPatrulla;
@@ -8,6 +8,11 @@ public class EnemigoIA : MonoBehaviour
 
     private int indicePatrulla = 0;
     public int vida = 100;
+
+    public void TakeDamage(int cantidad)
+    {
+        RecibirDanio(cantidad);
+    }
 
     public void RecibirDanio(int cantidad)
     {
