@@ -1,13 +1,26 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamageable
 {
+    public static List<UnidadMilitar> unidadesAliadas = new List<UnidadMilitar>();
+
     public string tipoUnidad;
     public int vida = 100;
     public float velocidad = 3f;
     public int costoEntrenamiento = 50;
 
     private Vector3? destino = null;
+
+    void OnEnable()
+    {
+        unidadesAliadas.Add(this);
+    }
+
+    void OnDisable()
+    {
+        unidadesAliadas.Remove(this);
+    }
     
     public void TakeDamage(int cantidad)
     {
