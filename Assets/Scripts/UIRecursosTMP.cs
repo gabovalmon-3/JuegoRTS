@@ -3,11 +3,17 @@ using TMPro;
 
 public class UIRecursosTMP : MonoBehaviour
 {
-    public TMP_Text textoOro;
-    public TMP_Text textoUnidades;
-    public TMP_Text textoEnemigos;
-    public OleadasManager oleadas;
-    public TMP_Text textoOleada;
+    [SerializeField] private TMP_Text textoOro;
+    [SerializeField] private TMP_Text textoUnidades;
+    [SerializeField] private TMP_Text textoEnemigos;
+    [SerializeField] private OleadasManager oleadas;
+    [SerializeField] private TMP_Text textoOleada;
+
+    public TMP_Text TextoOro => textoOro;
+    public TMP_Text TextoUnidades => textoUnidades;
+    public TMP_Text TextoEnemigos => textoEnemigos;
+    public OleadasManager Oleadas => oleadas;
+    public TMP_Text TextoOleada => textoOleada;
     void Update()
     {
         textoOro.text = "Oro: " + GameManager.Instance.oro;
