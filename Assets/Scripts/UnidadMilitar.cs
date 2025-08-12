@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable
+public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamageable
 {
     public string tipoUnidad;
     public int vida = 100;
@@ -9,7 +9,7 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable
 
     private Vector3? destino = null;
     
-    public void RecibirDanio(int cantidad)
+    public void TakeDamage(int cantidad)
     {
         vida -= cantidad;
         Debug.Log(tipoUnidad + " recibió " + cantidad + " de daño. Vida restante: " + vida);
@@ -19,6 +19,11 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable
             Debug.Log(tipoUnidad + " ha sido destruido.");
             Destroy(gameObject);
         }
+    }
+
+    public void RecibirDanio(int cantidad)
+    {
+        TakeDamage(cantidad);
     }
     
     public IUnidad Clonar()

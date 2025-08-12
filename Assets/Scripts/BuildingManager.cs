@@ -19,9 +19,11 @@ public class BuildingManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && currentFactory != null)
         {
-            Vector3 posicion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            posicion.z = 0;
-            currentFactory.CrearEdificio(posicion);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                currentFactory.CrearEdificio(hit.point);
+            }
         }
     }
 }
