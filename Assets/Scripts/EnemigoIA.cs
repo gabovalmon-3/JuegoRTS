@@ -48,18 +48,25 @@ public class EnemigoIA : MonoBehaviour, IDamageable
 
     public UnidadMilitar BuscarUnidadCercana()
     {
-        UnidadMilitar[] unidades = FindObjectsOfType<UnidadMilitar>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
+        UnidadMilitar masCercana = null;
+        float minDistancia = Mathf.Infinity;
 
-        foreach (UnidadMilitar unidad in unidades)
+        foreach (Collider col in colliders)
         {
-            float distancia = Vector3.Distance(transform.position, unidad.transform.position);
-            if (distancia < 10f) // rango de detección
+            UnidadMilitar unidad = col.GetComponent<UnidadMilitar>();
+            if (unidad != null)
             {
-                return unidad;
+                float distancia = Vector3.Distance(transform.position, unidad.transform.position);
+                if (distancia < minDistancia)
+                {
+                    minDistancia = distancia;
+                    masCercana = unidad;
+                }
             }
         }
 
-        return null;
+        return masCercana;
     }
 
 
