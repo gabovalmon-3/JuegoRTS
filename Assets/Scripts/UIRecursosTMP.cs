@@ -8,6 +8,20 @@ public class UIRecursosTMP : MonoBehaviour
     public TMP_Text textoEnemigos;
     public OleadasManager oleadas;
     public TMP_Text textoOleada;
+    void Start()
+    {
+        GameManager.Instance.OnEnemigosVivosChange += ActualizarEnemigos;
+        ActualizarEnemigos(GameManager.Instance.EnemigosVivos);
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnEnemigosVivosChange -= ActualizarEnemigos;
+        }
+    }
+
     void Update()
     {
         textoOro.text = "Oro: " + GameManager.Instance.oro;
@@ -15,10 +29,12 @@ public class UIRecursosTMP : MonoBehaviour
         int cantidadU = UnidadMilitar.unidadesAliadas.Count;
         textoUnidades.text = "Unidades: " + cantidadU;
 
-        int cantidadE = GameObject.FindObjectsOfType<EnemigoIA>().Length;
-        textoEnemigos.text = "Enemigos: " + cantidadE;
-        
         textoOleada.text = "Oleada: " + oleadas.oleadaActual;
     }
-    
+
+    void ActualizarEnemigos(int cantidad)
+    {
+        textoEnemigos.text = "Enemigos: " + cantidad;
+    }
+
 }
