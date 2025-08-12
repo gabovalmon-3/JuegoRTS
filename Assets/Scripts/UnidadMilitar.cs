@@ -1,6 +1,11 @@
 using UnityEngine;
+
+using UnityEngine.AI;
+
 using System.Collections.Generic;
 
+
+[RequireComponent(typeof(NavMeshAgent))]
 public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamageable
 {
     public static List<UnidadMilitar> unidadesAliadas = new List<UnidadMilitar>();
@@ -12,6 +17,9 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamagea
 
     private Vector3? destino = null;
 
+    private NavMeshAgent agent;
+
+
     void OnEnable()
     {
         unidadesAliadas.Add(this);
@@ -21,6 +29,7 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamagea
     {
         unidadesAliadas.Remove(this);
     }
+
     
     public void TakeDamage(int cantidad)
     {
@@ -54,6 +63,7 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamagea
     {
         nuevoDestino.y = transform.position.y;
         destino = nuevoDestino;
+        agent.SetDestination(nuevoDestino);
         CambiarEstado(null);
         Debug.Log(tipoUnidad + " se dirige a: " + destino);
     }
@@ -68,6 +78,12 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamagea
 
     private IEstadoUnidadJugador estadoActual;
 
+    void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = velocidad;
+    }
+
     public void CambiarEstado(IEstadoUnidadJugador nuevoEstado)
     {
         estadoActual = nuevoEstado;
@@ -77,15 +93,7 @@ public class UnidadMilitar : MonoBehaviour, IUnidad, IUnidadEjecutable, IDamagea
     {
         if (destino != null)
         {
-            Vector3 objetivo = destino.Value;
-            float distancia = Vector3.Distance(transform.position, objetivo);
-
-            if (distancia > 0.1f)
-            {
-                Vector3 direccion = (objetivo - transform.position).normalized;
-                transform.position += direccion * velocidad * Time.deltaTime;
-            }
-            else
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
                 destino = null;
                 CambiarEstado(new EstadoAtacarAuto()); // solo entra al estado automático cuando termina de moverse
