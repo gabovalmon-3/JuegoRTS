@@ -22,7 +22,10 @@ public class BuildingManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                currentFactory.CrearEdificio(hit.point);
+                if (GameManager.Instance.GastarOro(currentFactory.Cost))
+                {
+                    currentFactory.CrearEdificio(hit.point);
+                }
             }
         }
     }
