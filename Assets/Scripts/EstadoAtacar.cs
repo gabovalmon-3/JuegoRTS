@@ -83,17 +83,24 @@ public class EstadoAtacar : IEstadoUnidadIA
 
     private UnidadMilitar BuscarUnidadCercana(EnemigoIA contexto)
     {
-        UnidadMilitar[] unidades = GameObject.FindObjectsOfType<UnidadMilitar>();
+        Collider[] colliders = Physics.OverlapSphere(contexto.transform.position, 8f);
+        UnidadMilitar masCercana = null;
+        float minDistancia = Mathf.Infinity;
 
-        foreach (UnidadMilitar unidad in unidades)
+        foreach (Collider col in colliders)
         {
-            float distancia = Vector3.Distance(contexto.transform.position, unidad.transform.position);
-            if (distancia < 8f)
+            UnidadMilitar unidad = col.GetComponent<UnidadMilitar>();
+            if (unidad != null)
             {
-                return unidad;
+                float distancia = Vector3.Distance(contexto.transform.position, unidad.transform.position);
+                if (distancia < minDistancia)
+                {
+                    minDistancia = distancia;
+                    masCercana = unidad;
+                }
             }
         }
 
-        return null;
+        return masCercana;
     }
 }

@@ -12,7 +12,7 @@ public class UIRecursosTMP : MonoBehaviour
     {
         textoOro.text = "Oro: " + GameManager.Instance.oro;
 
-        int cantidadU = GameObject.FindObjectsOfType<UnidadMilitar>().Length;
+        int cantidadU = UnidadMilitar.unidadesAliadas.Count;
         textoUnidades.text = "Unidades: " + cantidadU;
 
         int cantidadE = GameObject.FindObjectsOfType<EnemigoIA>().Length;
