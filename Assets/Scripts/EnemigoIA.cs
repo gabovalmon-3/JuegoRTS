@@ -22,6 +22,7 @@ public class EnemigoIA : MonoBehaviour, IDamageable
         if (vida <= 0)
         {
             Debug.Log(name + " ha sido destruido.");
+            GameManager.Instance.UnregisterEnemy();
             Destroy(gameObject);
         }
     }
