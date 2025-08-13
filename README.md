@@ -22,8 +22,10 @@
 ---
 
 ## Descripción general
-Repositorio de un juego de estrategia en tiempo real (RTS) hecho con Unity. Estructura típica de Unity (`Assets`, `Packages`, `ProjectSettings`) y uso de **Universal Render Pipeline (URP)**.  
+Repositorio de un juego de estrategia en tiempo real (RTS) hecho con Unity. Estructura típica de Unity (`Assets`, `Packages`, `ProjectSettings`) y uso de **Universal Render Pipeline (URP)**.
 El objetivo del juego es construir y defender una base, recolectar recursos y crear unidades militares para combatir oleadas de enemigos controlados por IA.
+
+La escena principal incluida en este repositorio es **`Assets/Scenes/MainRTS.unity`**, preparada como punto de partida para integrar los distintos sistemas descritos más abajo.
 
 ---
 
